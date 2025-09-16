@@ -1,17 +1,8 @@
-# Stage 1: Build the application
-FROM node:14
+FROM nginx:alpine
 
-WORKDIR /app
+# Copy your frontend files into nginx's serving directory
+COPY hello.html /usr/share/nginx/html/index.html
+COPY dist /usr/share/nginx/html/dist
 
-COPY package.json .
-COPY bundle.js ./dist
-COPY hello.html .
-
-RUN npm install
-
-
-
-EXPOSE 80
-
-
-CMD ["node", "bundle.js ./dist"]
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
